@@ -16,8 +16,8 @@ import javax.swing.border.Border;
 
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
-import org.makerminds.internship.java.restaurantpoin.view.cook.TabelOrderView;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.CreateOrder;
+import org.makerminds.internship.java.restaurantpoin.view.waiter.PrintInvoiceView;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.ShowOrders;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.TableReservationView;
 
@@ -112,11 +112,16 @@ public class NavigationBarWaiter {
 						case 2:
 							containerPanel.removeAll();
 							try {
-								containerPanel = CreateOrder.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
-							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
-									| FileNotFoundException | SQLException e1) {
+								try {
+									containerPanel = CreateOrder.createMenuItemManagerContainerPanel();
+								} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+										| SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							} catch (FileNotFoundException e2) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								e2.printStackTrace();
 							}
 							LoginApp.changePanels(containerPanel);
 							break;
@@ -132,7 +137,15 @@ public class NavigationBarWaiter {
 							LoginApp.changePanels(containerPanel);
 							break;
 						case 4:
-							
+							containerPanel.removeAll();
+							try {
+								containerPanel = PrintInvoiceView.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+									| FileNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							LoginApp.changePanels(containerPanel);
 							break;
 						case 5:
 							LoginApp.signOut();

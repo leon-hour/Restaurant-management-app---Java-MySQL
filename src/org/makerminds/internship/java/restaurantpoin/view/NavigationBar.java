@@ -2,8 +2,8 @@ package org.makerminds.internship.java.restaurantpoin.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class NavigationBar {
 			}
 			navigationBarPanel.add(panel);
 			for(JPanel panel:navigationBarPanels) {
-				panel.addMouseListener(new MouseListener() {
+				panel.addMouseListener(new MouseAdapter() {
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -140,10 +140,6 @@ public class NavigationBar {
 						break;
 					}
 				}
-				public void mousePressed(MouseEvent e) {}
-				public void mouseReleased(MouseEvent e) {}
-				public void mouseEntered(MouseEvent e) {}
-				public void mouseExited(MouseEvent e) {}
 			});
 			}
 		}

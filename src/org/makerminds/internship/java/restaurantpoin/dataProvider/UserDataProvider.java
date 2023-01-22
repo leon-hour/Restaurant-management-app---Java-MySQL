@@ -55,6 +55,5 @@ public class UserDataProvider {
 				userList.add(new User(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),
 						resultSet.getString(4),UserRole.MANAGER, resultSet.getString(6)));
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 }

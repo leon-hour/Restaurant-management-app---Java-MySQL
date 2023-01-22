@@ -36,13 +36,13 @@ public class TableManagerController {
 		preparedStatement.setString(3, "Free");
 		preparedStatement.executeUpdate();
 		System.out.println("Record  inserted successfully");
-		dbmsConnection.closeConnection(connection, preparedStatement1);
-		dbmsConnection.closeConnection(connection, preparedStatement);
+		//dbmsConnection.closeConnection(connection, preparedStatement1);
+		//dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 		else {
 			System.out.println("Record found in the database");
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement1);
+		//dbmsConnection.closeConnection(connection, preparedStatement1);
 	}
 	
 	public static void updateRecord(String restaurantName, String oldId, String newId, String newNrOfSeats) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -59,7 +59,7 @@ public class TableManagerController {
 		} else {
 			System.out.println("No Such record in the Database");
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
+		//dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 	
 	public static void deleteTableRecord(String restaurantName, String id) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -74,7 +74,7 @@ public class TableManagerController {
 			} else {
 				System.out.println("No Such Record in the Database");
 			}
-			dbmsConnection.closeConnection(connection, preparedStatement);
+			//dbmsConnection.closeConnection(connection, preparedStatement);
 		}
 	
 }

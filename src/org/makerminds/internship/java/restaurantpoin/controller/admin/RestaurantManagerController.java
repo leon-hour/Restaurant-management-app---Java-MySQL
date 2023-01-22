@@ -108,7 +108,7 @@ public class RestaurantManagerController {
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		System.out.println("Created table in given database...");
-	    String sql1 = "CREATE TABLE orders (tableId VARCHAR(25) not NULL, MenuItem VARCHAR(20), itemPrice VARCHAR(10),quantity VARCHAR(2),orderStatur VARCHAR(20), PRIMARY KEY ( tableId ))"; 
+	    String sql1 = "CREATE TABLE orders (tableId VARCHAR(25) not NULL, MenuItem VARCHAR(20), itemPrice VARCHAR(10),quantity VARCHAR(2),orderStatur VARCHAR(20))"; 
 		Statement statement1 = connection.createStatement();
 		statement1.executeUpdate(sql1);
 		System.out.println("Created table in given database...");

@@ -35,7 +35,7 @@ public static JPanel createBasePanel(String restaurant) throws InstantiationExce
 
 String[] header = { "Table ID", "Nr of Seats","Status"};
 
-JTable table = new JTable(getRecord(0,"Done" ), header);
+JTable table = new JTable(getRecord(0,"Orderd" ), header);
 table.setFont(GENERAL_LABEL_FONT);
 table.setRowHeight(25);
 table.setBounds(20, 30, 500, 300);

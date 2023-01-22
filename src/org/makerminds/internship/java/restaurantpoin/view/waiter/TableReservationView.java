@@ -76,7 +76,7 @@ public static String[][] getRecord(int i, String status) throws InstantiationExc
 		tableData[i][2] = resultSet1.getString(3);
 		i++;
 	}
-	dbmsConnection.closeConnection(connection, preparedStatement);
+	//dbmsConnection.closeConnection(connection, preparedStatement);
 	return tableData;
 }
 }

@@ -28,7 +28,7 @@ public class MenuDataProvider {
 			tableList.add(rs.getString(1));
 			System.out.println(rs.getString(1));
 		}
-		dbmsConnection.closeConnection(connection, stmt);
+
 		return tableList;
 	}
 	

@@ -33,8 +33,8 @@ public class EmployeeManagerController {
 		preparedStatement.executeUpdate();
 		System.out.println("Record  inserted successfully");
 
-		dbmsConnection.closeConnection(connection, preparedStatement1);
-		dbmsConnection.closeConnection(connection, preparedStatement);
+		//dbmsConnection.closeConnection(connection, preparedStatement1);
+		//dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 		else {
 			System.out.println("Record found in the database");
@@ -60,7 +60,7 @@ public class EmployeeManagerController {
 		} else {
 			System.out.println("No Such record in the Database");
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
+		//dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 
 	public static void deleteRecord(String employeeId)
@@ -76,6 +76,6 @@ public class EmployeeManagerController {
 		} else {
 			System.out.println("No Such Record in the Database");
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
+		//dbmsConnection.closeConnection(connection, preparedStatement);
 	}
 }

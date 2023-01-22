@@ -30,7 +30,6 @@ import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.TableManagerController;
 import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
-import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
 /**
@@ -250,9 +249,10 @@ public class TableManagerView {
 	public static JPanel createMenuItemTabel(String dataBaseName) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		String[] header = { "ID", "Seats" };
+		tablePanel.removeAll();
 
 		table = new JTable(getRecord(0), header);
-		table.setBounds(20, 30, 310, 200);
+		table.setBounds(20, 30, 330, 200);
 		// JPanel tablePanel = new JPanel();
 		tablePanel.setLayout(null);
 		tablePanel.setBorder(BorderFactory.createTitledBorder(null, "   Table list",
@@ -281,7 +281,7 @@ public class TableManagerView {
 	public static String[][] getRecord(int i) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/" +
-			LoginController.getInstance().getLoggedInUser().getRestaurant(), "root", "Leonora.MM21");
+				restauranSelectorComboBox.getSelectedItem().toString(), "root", "Leonora.MM21");
 		Connection connection = dbmsConnection.getConnection();
 		String sql = "select * from TABLE1";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);

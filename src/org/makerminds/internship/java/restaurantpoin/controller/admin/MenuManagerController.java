@@ -25,7 +25,7 @@ public class MenuManagerController {
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		System.out.println("Created table in given database...");
-		dbmsConnection.closeConnection(connection, statement);
+		//dbmsConnection.closeConnection(connection, statement);
 	}
 	public static void updateTable(String restaurantName, String oldMenuName, String newMenuName)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -36,7 +36,7 @@ public class MenuManagerController {
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		System.out.println("The name of table has ben changed......!");
-		dbmsConnection.closeConnection(connection, statement);
+		//dbmsConnection.closeConnection(connection, statement);
 	}
 	public static void deleteTable(String restaurantName, String menutName)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -46,6 +46,6 @@ public class MenuManagerController {
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		System.out.println("Created table in given database...");
-		dbmsConnection.closeConnection(connection, statement);
+	//	dbmsConnection.closeConnection(connection, statement);
 	}
 }

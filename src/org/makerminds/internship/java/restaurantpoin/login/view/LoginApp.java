@@ -40,7 +40,7 @@ public class LoginApp {
 	private static JLayeredPane layeredPane;
 	private List<User> userList = userdataProvider.getUselList();
 	private static JPanel wellcomePanel;
-private static User allowedUser;
+	private static User allowedUser;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
