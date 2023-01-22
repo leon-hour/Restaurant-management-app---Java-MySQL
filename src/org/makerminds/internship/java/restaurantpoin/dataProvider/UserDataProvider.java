@@ -24,9 +24,9 @@ public class UserDataProvider {
 	}
 
 	public UserDataProvider() {
-			userList.add(new User("1","1","1","---",UserRole.MANAGER,"1"));
-			userList.add(new User("2","2","2","---",UserRole.WAITER,"2"));
-			userList.add(new User("3","3","3","Restaurant1",UserRole.COOK,"3"));
+			userList.add(new User("1","1","1","route66",UserRole.MANAGER,"1"));
+			userList.add(new User("2","2","2","route66",UserRole.WAITER,"2"));
+			userList.add(new User("3","3","3","route66",UserRole.COOK,"3"));
 			try {
 				getRecord();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | FileNotFoundException

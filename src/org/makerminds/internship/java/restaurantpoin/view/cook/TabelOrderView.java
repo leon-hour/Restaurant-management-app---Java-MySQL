@@ -20,38 +20,39 @@ import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
 public class TabelOrderView {
 		
-		static JPanel containerPanel = new JPanel();
-		private static final Font GENERAL_LABEL_FONT = new Font("Arial", Font.BOLD, 15);
-	//	private final static Color PANEL_BACKGROUND_COLOR = Color.decode("#4285F4");
-	//	private final static Border blackline = BorderFactory.createLineBorder(Color.black);
-		static JPanel createContainerPanel(String restaurantDataBaseName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
-			containerPanel = createBasePanel(restaurantDataBaseName);
-			return containerPanel;
-		}
-		public static JPanel createBasePanel(String restaurant) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
+	
 
-		String[] header = { "Name", "Quantity","Status"};
-
-		JTable table = new JTable(getRecord(0,"Orderd" ), header);
-		table.setFont(GENERAL_LABEL_FONT);
-		table.setRowHeight(25);
-		table.setBounds(20, 30, 500, 300);
-		// JPanel tablePanel = new JPanel();
-		containerPanel.setLayout(null);
-		containerPanel.setBorder(BorderFactory.createTitledBorder(null, "   Arrived Orders ",
-				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
-		containerPanel.setBackground(Color.white);
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(30, 30, 550, 350);
-		table.setFillsViewportHeight(true);
-		containerPanel.add(scrollPane);
-		JButton doneButton = new JButton("Done");
-		containerPanel.setBounds(10, 10, 700, 400);
-		doneButton.setBounds(620, 200, 70, 30);
-		containerPanel.add(doneButton);
+	static JPanel containerPanel = new JPanel();
+	private static final Font GENERAL_LABEL_FONT = new Font("Arial", Font.BOLD, 15);
+//	private final static Color PANEL_BACKGROUND_COLOR = Color.decode("#4285F4");
+//	private final static Border blackline = BorderFactory.createLineBorder(Color.black);
+	static JPanel createContainerPanel(String restaurantDataBaseName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
+		containerPanel = createBasePanel(restaurantDataBaseName);
 		return containerPanel;
 	}
+	public static JPanel createBasePanel(String restaurant) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
 
+	String[] header = { "Table ID", "Nr of Seats","Status"};
+
+	JTable table = new JTable(getRecord(0,"Orderd" ), header);
+	table.setFont(GENERAL_LABEL_FONT);
+	table.setRowHeight(25);
+	table.setBounds(20, 30, 500, 300);
+	// JPanel tablePanel = new JPanel();
+	containerPanel.setLayout(null);
+	containerPanel.setBorder(BorderFactory.createTitledBorder(null, "   Arrived Orders ",
+			TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
+	containerPanel.setBackground(Color.white);
+	JScrollPane scrollPane = new JScrollPane(table);
+	scrollPane.setBounds(30, 30, 550, 350);
+	table.setFillsViewportHeight(true);
+	containerPanel.add(scrollPane);
+	JButton doneButton = new JButton("Done");
+	containerPanel.setBounds(10, 10, 700, 400);
+	doneButton.setBounds(620, 200, 70, 30);
+	containerPanel.add(doneButton);
+	return containerPanel;
+}
 	public static String[][] getRecord(int i, String status) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/" +
@@ -77,7 +78,6 @@ public class TabelOrderView {
 			tableData[i][2] = resultSet1.getString(5);
 			i++;
 		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
 		return tableData;
 	}
 	}

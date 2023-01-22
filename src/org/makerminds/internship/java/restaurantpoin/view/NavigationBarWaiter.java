@@ -17,6 +17,9 @@ import javax.swing.border.Border;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
 import org.makerminds.internship.java.restaurantpoin.view.cook.TabelOrderView;
+import org.makerminds.internship.java.restaurantpoin.view.waiter.CreateOrder;
+import org.makerminds.internship.java.restaurantpoin.view.waiter.ShowOrders;
+import org.makerminds.internship.java.restaurantpoin.view.waiter.TableReservationView;
 
 /**
  * @author Leonora Latifaj
@@ -98,18 +101,35 @@ public class NavigationBarWaiter {
 						case 1:
 							containerPanel.removeAll();
 							try {
-								containerPanel = TabelOrderView.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+								containerPanel = TableReservationView.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
 							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 									| FileNotFoundException | SQLException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							LoginApp.changePanels(containerPanel);
+							break;
 						case 2:
-							System.out.println("Paneli 2");
+							containerPanel.removeAll();
+							try {
+								containerPanel = CreateOrder.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+									| FileNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							LoginApp.changePanels(containerPanel);
 							break;
 						case 3:
-							System.out.println("Paneli 3");
+							containerPanel.removeAll();
+							try {
+								containerPanel = ShowOrders.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+									| FileNotFoundException | SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							LoginApp.changePanels(containerPanel);
 							break;
 						case 4:
 							

@@ -120,7 +120,12 @@ public class NavigationBar {
 						break;
 					case 3:
 						containerPanel.removeAll();
-						//containerPanel = TableManagerView.createTableManagerContainerPanel();	
+						try {
+							containerPanel = TableManagerView.createTableManagerContainerPanel();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}	
 						LoginApp.changePanels(containerPanel);
 						break;
 					case 4:
