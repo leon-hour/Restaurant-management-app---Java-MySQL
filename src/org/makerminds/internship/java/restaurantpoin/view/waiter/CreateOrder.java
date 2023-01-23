@@ -271,7 +271,7 @@ public class CreateOrder {
 
 		JPanel restaurantSelectorPanel = new JPanel();
 		restaurantSelectorPanel.setLayout(null);
-		restaurantSelectorPanel.setBorder(BorderFactory.createTitledBorder(null, "Restaurant selector",
+		restaurantSelectorPanel.setBorder(BorderFactory.createTitledBorder(null, "Table selector",
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
 		restaurantSelectorPanel.setBounds(410, 80, 350, 100);
 		restaurantSelectorPanel.setBackground(Color.white);

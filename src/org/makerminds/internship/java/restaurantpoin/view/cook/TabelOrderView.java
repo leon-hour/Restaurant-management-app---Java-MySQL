@@ -2,6 +2,8 @@ package org.makerminds.internship.java.restaurantpoin.view.cook;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
+import org.makerminds.internship.java.restaurantpoin.controller.admin.CreateOrderController;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
@@ -32,7 +35,7 @@ public class TabelOrderView {
 	}
 	public static JPanel createBasePanel(String restaurant) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
 
-	String[] header = { "Table ID", "Nr of Seats","Status"};
+	String[] header = { "Table ID", "MenuItem","Quantity","Statusi"};
 
 	JTable table = new JTable(getRecord(0,"Orderd" ), header);
 	table.setFont(GENERAL_LABEL_FONT);
@@ -48,6 +51,25 @@ public class TabelOrderView {
 	table.setFillsViewportHeight(true);
 	containerPanel.add(scrollPane);
 	JButton doneButton = new JButton("Done");
+	doneButton.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(table.getSelectedRow() != -1) {
+				try {
+					CreateOrderController.updateRecord(LoginController.getInstance().getLoggedInUser().getRestaurant(),
+							table.getValueAt(table.getSelectedRow(), 0).toString(),
+							table.getValueAt(table.getSelectedRow(), 1).toString(),
+							"Ready");
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+						| SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+	});
 	containerPanel.setBounds(10, 10, 700, 400);
 	doneButton.setBounds(620, 200, 70, 30);
 	containerPanel.add(doneButton);
@@ -71,11 +93,13 @@ public class TabelOrderView {
 		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
 		preparedStatement1.setString(1, status);
 		ResultSet resultSet1 = preparedStatement1.executeQuery();
-		String[][] tableData = new String[j][3];
+		String[][] tableData = new String[j][4];
 		while (resultSet1.next()) {
-			tableData[i][0] = resultSet1.getString(2);
-			tableData[i][1] = resultSet1.getString(4);
-			tableData[i][2] = resultSet1.getString(5);
+
+			tableData[i][0] = resultSet1.getString(1);
+			tableData[i][1] = resultSet1.getString(2);
+			tableData[i][2] = resultSet1.getString(4);
+			tableData[i][3] = resultSet1.getString(5);
 			i++;
 		}
 		return tableData;

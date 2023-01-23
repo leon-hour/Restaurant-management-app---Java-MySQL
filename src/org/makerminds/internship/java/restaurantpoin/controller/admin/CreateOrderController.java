@@ -24,16 +24,31 @@ public class CreateOrderController {
 			System.out.println("Record  inserted successfully");
 		}
 		
-		public static void updateRecord(String restaurantName, String menuName, String oldId, String newId, String newName, String newPrice)
+		public static void updateRecord(String restaurantName, String tableId, String menuItem, String newOrderStatus)
 				throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 			DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/"+restaurantName, "root", "Leonora.MM21");
 			Connection connection = dbmsConnection.getConnection();
-			String sql = "update "+menuName+" set id = ?, name = ?, price = ? where id = ?;";
+			String sql = "update Orders set orderStatur = ? where  tableId =? and  MenuItem = ?;";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(4, oldId);
-			preparedStatement.setString(1, newId);
-			preparedStatement.setString(2, newName);
-			preparedStatement.setString(3, newPrice);
+			preparedStatement.setString(3, menuItem);
+			preparedStatement.setString(2, tableId);
+			preparedStatement.setString(1, newOrderStatus);
+			int i = preparedStatement.executeUpdate();
+			if (i > 0) {
+				System.out.println("Record updated sucessfully");
+			} else {
+				System.out.println("No Such record in the Database");
+			}
+		}
+		public static void updateRecordWaiter(String restaurantName, String tableId, String menuItem, String newOrderStatus)
+				throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+			DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/"+restaurantName, "root", "Leonora.MM21");
+			Connection connection = dbmsConnection.getConnection();
+			String sql = "update Orders set orderStatur = ? where  tableId =? and  MenuItem = ?;";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(3, menuItem);
+			preparedStatement.setString(2, tableId);
+			preparedStatement.setString(1, newOrderStatus);
 			int i = preparedStatement.executeUpdate();
 			if (i > 0) {
 				System.out.println("Record updated sucessfully");
