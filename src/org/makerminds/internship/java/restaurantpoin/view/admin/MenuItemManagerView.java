@@ -32,6 +32,7 @@ import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.MenuItemManagerController;
 import org.makerminds.internship.java.restaurantpoin.dataProvider.MenuDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.MenuItemDataProvider;
 import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
@@ -354,7 +355,7 @@ public class MenuItemManagerView {
 			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		String[] header = { "ID", "Menu Item", "Price" };
 
-		table = new JTable(getRecord(0, dataBaseName, tableName), header);
+		table = new JTable(MenuItemDataProvider.getRecord(0, dataBaseName, tableName), header);
 		table.setBounds(20, 30, 310, 100);
 		// JPanel tablePanel = new JPanel();
 		tablePanel.setLayout(null);
@@ -381,34 +382,6 @@ public class MenuItemManagerView {
 		tablePanel.add(scrollPane);
 		System.out.println(dataBaseName + tableName);
 		return tablePanel;
-	}
-
-	public static String[][] getRecord(int i, String dataBaseName, String tableName) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
-		DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/" + dataBaseName, "root", "Leonora.MM21");
-		Connection connection = dbmsConnection.getConnection();
-		String sql1 = "select * from " + tableName + ";";
-		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
-		;
-		ResultSet resultSet1 = preparedStatement1.executeQuery(sql1);
-		int j = 0;
-		while (resultSet1.next()) {
-			j++;
-			System.out.println(j);
-		}
-		String sql = "select * from " + tableName + ";";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		;
-		ResultSet resultSet = preparedStatement.executeQuery(sql);
-		String[][] tableData = new String[j][3];
-		while (resultSet.next()) {
-			tableData[i][0] = resultSet.getString(1);
-			tableData[i][1] = resultSet.getString(2);
-			tableData[i][2] = resultSet.getString(3);
-			i++;
-		}
-		dbmsConnection.closeConnection(connection, preparedStatement);
-		return tableData;
 	}
 	
 	}

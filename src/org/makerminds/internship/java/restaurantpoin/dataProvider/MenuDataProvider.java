@@ -28,8 +28,6 @@ public class MenuDataProvider {
 			tableList.add(rs.getString(1));
 			System.out.println(rs.getString(1));
 		}
-
 		return tableList;
 	}
-	
 }

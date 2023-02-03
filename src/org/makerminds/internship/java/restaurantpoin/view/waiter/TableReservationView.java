@@ -25,7 +25,7 @@ public class TableReservationView {
 	private static final Font GENERAL_LABEL_FONT = new Font("Arial", Font.BOLD, 15);
 //	private final static Color PANEL_BACKGROUND_COLOR = Color.decode("#4285F4");
 //	private final static Border blackline = BorderFactory.createLineBorder(Color.black);
-	static JPanel createContainerPanel(String restaurantDataBaseName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
+	public static JPanel createContainerPanel(String restaurantDataBaseName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
 		containerPanel = createBasePanel(restaurantDataBaseName);
 		return containerPanel;
 	}
@@ -46,7 +46,7 @@ public class TableReservationView {
 	scrollPane.setBounds(30, 30, 550, 350);
 	table.setFillsViewportHeight(true);
 	containerPanel.add(scrollPane);
-	JButton doneButton = new JButton("Reserve");    
+	JButton doneButton = new JButton("Change");    
 	containerPanel.setBounds(10, 10, 720, 400);
 	doneButton.setBounds(590, 200, 120, 30);
 	containerPanel.add(doneButton);

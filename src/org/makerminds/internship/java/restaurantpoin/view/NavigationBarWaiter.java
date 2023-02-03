@@ -2,6 +2,7 @@ package org.makerminds.internship.java.restaurantpoin.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.CreateOrder;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.PrintInvoiceView;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.ShowOrders;
+import org.makerminds.internship.java.restaurantpoin.view.waiter.Table;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.TableReservationView;
 
 /**
@@ -27,11 +29,10 @@ import org.makerminds.internship.java.restaurantpoin.view.waiter.TableReservatio
  */
 public class NavigationBarWaiter {
 
-	
-	
 	private static List<JPanel> navigationBarbuttonPanels = new ArrayList<JPanel>();
 	private static List<JLabel> navigationBarbuttonLabels = new ArrayList<JLabel>();
-	private static String[] navigationBarPanelsLabel = { "Restaurant Point","Table reservation","Create Order", "Show Orders", " Print Invoice","Sign out" };
+	private static String[] navigationBarPanelsLabel = { "Restaurant Point", "Table reservation", "Create Order",
+			"Show Orders", " Print Invoice", "Sign out" };
 	private static final Font GENERAL_LABEL_FONT = new Font("Arial", Font.CENTER_BASELINE, 15);
 	private final static Color PANEL_BACKGROUND_COLOR = Color.decode("#4285F4");
 	private static int position = 0;
@@ -41,9 +42,9 @@ public class NavigationBarWaiter {
 	public static JPanel createNavigationBarPanel() {
 		JPanel navigationBarPanel = new JPanel();
 		navigationBarPanel.setLayout(null);
-		navigationBarPanel.setBounds(0,0,200,460);
+		navigationBarPanel.setBounds(0, 0, 200, 460);
 		navigationBarPanel.setBackground(Color.WHITE);
-		List<JPanel> p   = createNavigationButtonPanels();
+		List<JPanel> p = createNavigationButtonPanels();
 		for (JPanel panel : p) {
 			navigationBarPanel.add(panel);
 		}
@@ -82,7 +83,7 @@ public class NavigationBarWaiter {
 
 	public static void addActionToPanels() {
 		for (JPanel navigationBarPanelButton : navigationBarbuttonPanels) {
-			navigationBarPanelButton.addMouseListener(new MouseListener() {
+			navigationBarPanelButton.addMouseListener(new MouseAdapter() {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -98,10 +99,11 @@ public class NavigationBarWaiter {
 							navigationBarbuttonPanels.get(position).setForeground(Color.WHITE);
 						}
 						switch (position) {
-						case 1:
+						case 2:
 							containerPanel.removeAll();
 							try {
-								containerPanel = TableReservationView.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+								containerPanel = Table.createBasePanel(
+										LoginController.getInstance().getLoggedInUser().getRestaurant());
 							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 									| FileNotFoundException | SQLException e1) {
 								// TODO Auto-generated catch block
@@ -109,11 +111,11 @@ public class NavigationBarWaiter {
 							}
 							LoginApp.changePanels(containerPanel);
 							break;
-						case 2:
+						case 1:
 							containerPanel.removeAll();
 							try {
 								try {
-									containerPanel = CreateOrder.createMenuItemManagerContainerPanel();
+									containerPanel = TableReservationView.createContainerPanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
 								} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 										| SQLException e1) {
 									// TODO Auto-generated catch block
@@ -128,7 +130,8 @@ public class NavigationBarWaiter {
 						case 3:
 							containerPanel.removeAll();
 							try {
-								containerPanel = ShowOrders.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+								containerPanel = ShowOrders.createBasePanel(
+										LoginController.getInstance().getLoggedInUser().getRestaurant());
 							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 									| FileNotFoundException | SQLException e1) {
 								// TODO Auto-generated catch block
@@ -139,7 +142,8 @@ public class NavigationBarWaiter {
 						case 4:
 							containerPanel.removeAll();
 							try {
-								containerPanel = PrintInvoiceView.createBasePanel(LoginController.getInstance().getLoggedInUser().getRestaurant());
+								containerPanel = PrintInvoiceView.createBasePanel(
+										LoginController.getInstance().getLoggedInUser().getRestaurant());
 							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 									| FileNotFoundException | SQLException e1) {
 								// TODO Auto-generated catch block
@@ -155,15 +159,11 @@ public class NavigationBarWaiter {
 						}
 					}
 				}
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-		});
+			});
 		}
 	}
-	public static int getPosition() 
-	{
+
+	public static int getPosition() {
 		return position;
 	}
 }

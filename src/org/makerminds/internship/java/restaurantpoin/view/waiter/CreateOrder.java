@@ -49,9 +49,10 @@ public class CreateOrder {
 	private static JTextField textFieldMenuItemName = new JTextField();;
 	private static JTextField textFieldid = new JTextField();
 	private static JComboBox<String> menuSelectorComboBox;
-	private static JComboBox<String> restauranSelectorComboBox;
+	private static JComboBox<String> menuSelector;
 	private static JPanel tablePanel = new JPanel();
 	private static JTable table;
+	private static String tableID;
 	public static JPanel createContainerPanel(String labelMessage, String textFieldLabelMessage, String textFieldLabel2,
 			String textFieldLabel3) {
 		containerPanel = createBasePanel(labelMessage, textFieldLabelMessage, textFieldLabel2, textFieldLabel3);
@@ -119,14 +120,12 @@ public class CreateOrder {
 				// ButtonsAction buttonsAction = new ButtonsAction();
 				if (e.getSource() == addButton) {
 					try {
-						if (menuSelectorComboBox.getSelectedItem()!= null
-								&& restauranSelectorComboBox.getSelectedItem()!= null
+						if ( menuSelector.getSelectedItem() != null
 								&& textFieldid.getText().equals("") == false) {
 							System.out.println("llllll");
-							int i =table.getSelectedRow();
+							int i = table.getSelectedRow();
 							System.out.println(i);
-							CreateOrderController.insertRecord(
-									restauranSelectorComboBox.getSelectedItem().toString(),
+							CreateOrderController.insertRecord(tableID,
 									table.getValueAt(i, 1).toString(), table.getValueAt(i, 2).toString(),
 									textFieldid.getText());
 						}
@@ -136,8 +135,7 @@ public class CreateOrder {
 					}
 				} else if (e.getSource() == deleteButton) {
 					try {
-						MenuItemManagerController.deleteRecord(restauranSelectorComboBox.getSelectedItem().toString(),
-								menuSelectorComboBox.getSelectedItem().toString(), textFieldid.getText(),
+						MenuItemManagerController.deleteRecord(menuSelector.getSelectedItem().toString(),"",textFieldid.getText(),
 								textFieldMenuItemName.getText(), textFieldPrice.getText());
 					} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 							| SQLException e1) {
@@ -146,25 +144,22 @@ public class CreateOrder {
 				} else if (e.getSource() == updateButton) {
 					try {
 						if (table.getSelectedRow() != -1)
-							MenuItemManagerController.updateRecord(
-									restauranSelectorComboBox.getSelectedItem().toString(),
+							MenuItemManagerController.updateRecord(menuSelector.getSelectedItem().toString(),
 									menuSelectorComboBox.getSelectedItem().toString(),
-									table.getValueAt(table.getSelectedRow(), 0).toString(),
-									textFieldid.getText(), textFieldMenuItemName.getText(),
-									textFieldPrice.getText());
+									table.getValueAt(table.getSelectedRow(), 0).toString(), textFieldid.getText(),
+									textFieldMenuItemName.getText(), textFieldPrice.getText());
 					} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 							| SQLException e1) {
 						e1.printStackTrace();
 					}
 				}
 				try {
-					if (restauranSelectorComboBox.getSelectedItem() != null
-							&& menuSelectorComboBox.getSelectedItem() != null) {
+					if (menuSelector.getSelectedItem() != null) {
 
 						restaurantManagerContainerPanel.remove(tablePanel);
 						tablePanel.removeAll();
 						restaurantManagerContainerPanel
-								.add(createMenuItemTabel(menuSelectorComboBox.getSelectedItem().toString()));
+								.add(createMenuItemTabel(menuSelector.getSelectedItem().toString()));
 					}
 				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException el) {
 					el.printStackTrace();
@@ -179,11 +174,12 @@ public class CreateOrder {
 		});
 	}
 
-	public static JPanel createMenuItemManagerContainerPanel() throws FileNotFoundException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	public static JPanel createMenuItemManagerContainerPanel(String  tableId) throws FileNotFoundException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException {
+		tableID = tableId;
 		restaurantManagerContainerPanel = createContainerPanel("Create Order", "Quantity", "", "");
 		List<JPanel> comboBoxPanels = createComboBoxPanel();
 		restaurantManagerContainerPanel.add(comboBoxPanels.get(0));
-		restaurantManagerContainerPanel.add(comboBoxPanels.get(1));
 		return restaurantManagerContainerPanel;
 	}
 
@@ -194,71 +190,36 @@ public class CreateOrder {
 
 	public static List<JPanel> createComboBoxPanel() {
 		List<JPanel> comboBoxPanels = new ArrayList<>();
-		restauranSelectorComboBox = new JComboBox<String>();
-		restauranSelectorComboBox.setFont(GENERAL_LABEL_FONT);
-		restauranSelectorComboBox.removeAllItems();
+		menuSelector = new JComboBox<String>();
+		menuSelector.setFont(GENERAL_LABEL_FONT);
+		menuSelector.removeAllItems();
 		List<String> menuList = new ArrayList<String>();
 		try {
-			for(String s : getRecord(0)) {
+			for (String s : MenuDataProvider.getTabelList(LoginController.getInstance().getLoggedInUser().getRestaurant())) {
 				menuList.add(s);
 			}
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException |FileNotFoundException| SQLException e) {
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String[] array = menuList.toArray(new String[menuList.size()]);
 		for (String s : array) {
-			restauranSelectorComboBox.insertItemAt(s, 0);
+			menuSelector.insertItemAt(s, 0);
 		}
 		;
-		restauranSelectorComboBox.setBounds(20, 40, 310, 40);
-		restauranSelectorComboBox.setFocusable(true);
-
-		menuSelectorComboBox = new JComboBox<String>();
-		menuSelectorComboBox.setFont(GENERAL_LABEL_FONT);
-		menuSelectorComboBox.removeAll();
-		ItemListener itemListener = new ItemListener() {
+		menuSelector.setBounds(20, 40, 310, 40);
+		menuSelector.setFocusable(true);
+		ItemListener itemListener1 = new ItemListener() {
 			public void itemStateChanged(ItemEvent itemEvent) {
+				// int state = itemEvent.getStateChange();
 				System.out.println("Item: " + itemEvent.getItem());
 				ItemSelectable is = itemEvent.getItemSelectable();
 				System.out.println(", Selected: " + selectedString(is));
-				menuSelectorComboBox.removeAllItems();
 				try {
-					for (String s : MenuDataProvider.getTabelList(LoginController.getInstance().getLoggedInUser().getRestaurant())) {
-						menuSelectorComboBox.insertItemAt(s,0);
-					}
-				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-
-					e.printStackTrace();
-				}
-				menuSelectorComboBox.setBounds(20, 40, 310, 40);
-				ItemListener itemListener1 = new ItemListener() {
-					public void itemStateChanged(ItemEvent itemEvent) {
-						// int state = itemEvent.getStateChange();
-						System.out.println("Item: " + itemEvent.getItem());
-						ItemSelectable is = itemEvent.getItemSelectable();
-						System.out.println(", Selected: " + selectedString(is));
-						try {
-							if (menuSelectorComboBox.getSelectedItem() != null) {
-								tablePanel.removeAll();
-								restaurantManagerContainerPanel
-										.add(createMenuItemTabel(menuSelectorComboBox.getSelectedItem().toString()));
-							}
-						} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
-								| SQLException el) {
-							el.printStackTrace();
-						} catch (FileNotFoundException e1) {
-							e1.printStackTrace();
-						}
-					}
-				};
-				menuSelectorComboBox.addItemListener(itemListener1);
-				try {
-					if (menuSelectorComboBox.getSelectedItem() != null) {
-						restaurantManagerContainerPanel.remove(tablePanel);
-						// tablePanel.removeAll();
+					if (menuSelector.getSelectedItem() != null) {
+						tablePanel.removeAll();
 						restaurantManagerContainerPanel
-								.add(createMenuItemTabel(menuSelectorComboBox.getSelectedItem().toString()));
+								.add(createMenuItemTabel(menuSelector.getSelectedItem().toString()));
 					}
 				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException el) {
 					el.printStackTrace();
@@ -267,7 +228,20 @@ public class CreateOrder {
 				}
 			}
 		};
-		restauranSelectorComboBox.addItemListener(itemListener);
+		menuSelector.addItemListener(itemListener1);
+		try {
+			if (menuSelector.getSelectedItem() != null) {
+				restaurantManagerContainerPanel.remove(tablePanel);
+				// tablePanel.removeAll();
+				restaurantManagerContainerPanel.add(createMenuItemTabel(menuSelector.getSelectedItem().toString()));
+			}
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException el) {
+			el.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		menuSelector.addItemListener(itemListener1);
 
 		JPanel restaurantSelectorPanel = new JPanel();
 		restaurantSelectorPanel.setLayout(null);
@@ -275,7 +249,7 @@ public class CreateOrder {
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
 		restaurantSelectorPanel.setBounds(410, 80, 350, 100);
 		restaurantSelectorPanel.setBackground(Color.white);
-		restaurantSelectorPanel.add(restauranSelectorComboBox);
+		restaurantSelectorPanel.add(menuSelector);
 
 		JPanel menuSelectorPanel = new JPanel();
 		menuSelectorPanel.setLayout(null);
@@ -283,14 +257,13 @@ public class CreateOrder {
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
 		menuSelectorPanel.setBounds(410, 180, 350, 100);
 		menuSelectorPanel.setBackground(Color.white);
-		menuSelectorPanel.add(menuSelectorComboBox);
 		comboBoxPanels.add(restaurantSelectorPanel);
 		comboBoxPanels.add(menuSelectorPanel);
 		return comboBoxPanels;
 	}
 
-	public static JPanel createMenuItemTabel( String tableName) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
+	public static JPanel createMenuItemTabel(String tableName) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, SQLException, FileNotFoundException {
 		String[] header = { "ID", "Menu Item", "Price" };
 
 		table = new JTable(getRecord(0, tableName), header);
@@ -299,31 +272,21 @@ public class CreateOrder {
 		tablePanel.setLayout(null);
 		tablePanel.setBorder(BorderFactory.createTitledBorder(null, "   Menu item list",
 				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
-		tablePanel.setBounds(410, 280, 350, 170);
+		tablePanel.setBounds(410, 180, 350, 270);
 		tablePanel.setBackground(Color.white);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(20, 30, 310, 120);
+		scrollPane.setBounds(20, 30, 310, 220);
 		table.setFillsViewportHeight(true);
-		/*
-		 * table.addMouseListener(new MouseAdapter() { public void
-		 * mouseClicked(MouseEvent e) { table.getSelectedRow();
-		 * 
-		 * textFieldPrice.setText((String) table.getValueAt(table.getSelectedRow(), 2));
-		 * textFieldMenuItemName.setText((String)
-		 * table.getValueAt(table.getSelectedRow(), 1));
-		 * textFieldMenuItemid.setText((String) table.getValueAt(table.getSelectedRow(),
-		 * 0)); } });
-		 */
 		tablePanel.add(scrollPane);
 		System.out.println(tableName);
 		return tablePanel;
 	}
 
-	public static String[][] getRecord(int i,String tableName) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
-		DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/" + 
-LoginController.getInstance().getLoggedInUser().getRestaurant(), "root",
-				"Leonora.MM21");
+	public static String[][] getRecord(int i, String tableName) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, SQLException, FileNotFoundException {
+		DBMSConnection dbmsConnection = new DBMSConnection(
+				"jdbc:mysql://localhost:3306/" + LoginController.getInstance().getLoggedInUser().getRestaurant(),
+				"root", "Leonora.MM21");
 		Connection connection = dbmsConnection.getConnection();
 		String sql1 = "select * from " + tableName + ";";
 		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
@@ -347,21 +310,51 @@ LoginController.getInstance().getLoggedInUser().getRestaurant(), "root",
 		}
 		return tableData;
 	}
-	/*
-	 * public static JPanel createMenuTabel() throws InstantiationException,
-	 * IllegalAccessException, ClassNotFoundException, SQLException,
-	 * FileNotFoundException { String[] header = { "ID" }; tablePanel.removeAll();
-	 * 
-	 * table = new JTable(getRecord(0), header); table.setBounds(20, 30, 330, 200);
-	 * // JPanel tablePanel = new JPanel(); tablePanel.setLayout(null);
-	 * tablePanel.setBorder(BorderFactory.createTitledBorder(null, "   Table list",
-	 * TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-	 * GENERAL_LABEL_FONT, Color.BLACK)); tablePanel.setBounds(210, 190, 350, 270);
-	 * tablePanel.setBackground(Color.white); JScrollPane scrollPane = new
-	 * JScrollPane(table); scrollPane.setBounds(20, 30, 310, 200);
-	 * table.setFillsViewportHeight(true); tablePanel.add(scrollPane); return
-	 * tablePanel; }
-	 */
+
+	public static void createOrderTabel(String tableId) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, FileNotFoundException, SQLException {
+		String[] header = { "ID", "Menu Item", "Price" };
+
+		table = new JTable(getOrders(0, tableId), header);
+		table.setBounds(20, 30, 310, 100);
+		// JPanel tablePanel = new JPanel();
+		tablePanel.setLayout(null);
+		tablePanel.setBorder(BorderFactory.createTitledBorder(null, "   Menu item list",
+				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, GENERAL_LABEL_FONT, Color.BLACK));
+		tablePanel.setBounds(410, 280, 350, 170);
+		tablePanel.setBackground(Color.white);
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(20, 30, 310, 120);
+		table.setFillsViewportHeight(true);
+	}
+
+	private static String[][] getOrders(int i, String tableId)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		DBMSConnection dbmsConnection = new DBMSConnection(
+				"jdbc:mysql://localhost:3306/" + LoginController.getInstance().getLoggedInUser().getRestaurant(),
+				"root", "Leonora.MM21");
+		Connection connection = dbmsConnection.getConnection();
+		String sql = "select * from Orders where tableId = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		int j = 0;
+		while (resultSet.next()) {
+			j++;
+			System.out.println(j);
+		}
+		String sql1 = "\"select * from Orders where tableId = ?";
+		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
+		preparedStatement1.setString(1, tableId);
+		ResultSet resultSet1 = preparedStatement1.executeQuery();
+		String[][] tableData = new String[j][3];
+		while (resultSet1.next()) {
+			tableData[i][0] = resultSet1.getString(1);
+			tableData[i][0] = resultSet1.getString(2);
+			tableData[i][0] = resultSet1.getString(3);
+			i++;
+		}
+		return tableData;
+	}
 
 	public static String[] getRecord(int i) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException, FileNotFoundException {
