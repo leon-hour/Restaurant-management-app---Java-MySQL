@@ -1,9 +1,11 @@
-package org.makerminds.internship.java.restaurantpoin.controller.admin;
+package org.makerminds.internship.java.restaurantpoin.controller.waiter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.makerminds.internship.java.restaurantpoin.enums.OrderStatus;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
@@ -19,7 +21,7 @@ public class CreateOrderController {
 			preparedStatement.setString(2, menuItemName);
 			preparedStatement.setString(3, menuItemPrice);
 			preparedStatement.setString(4, quantity);
-			preparedStatement.setString(5, "Orderd");
+			preparedStatement.setString(5, OrderStatus.QUEUE.toString());
 			preparedStatement.executeUpdate();
 			System.out.println("Record  inserted successfully");
 		}
@@ -32,7 +34,16 @@ public class CreateOrderController {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(3, menuItem);
 			preparedStatement.setString(2, tableId);
-			preparedStatement.setString(1, newOrderStatus);
+			switch(newOrderStatus) {
+			case "QUEUE":
+				newOrderStatus = OrderStatus.IN_PROGRESS.toString();
+				preparedStatement.setString(1, newOrderStatus);
+				break;
+			case "IN_PROGRESS":
+				newOrderStatus = OrderStatus.READY.toString();
+				preparedStatement.setString(1, newOrderStatus);
+				break;
+			}
 			int i = preparedStatement.executeUpdate();
 			if (i > 0) {
 				System.out.println("Record updated sucessfully");
@@ -40,15 +51,23 @@ public class CreateOrderController {
 				System.out.println("No Such record in the Database");
 			}
 		}
-		public static void updateRecordWaiter(String restaurantName, String tableId, String menuItem, String newOrderStatus)
+		public static void updateRecordWaiter(String restaurantName, String tableId, String newOrderStatus)
 				throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 			DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/"+restaurantName, "root", "Leonora.MM21");
 			Connection connection = dbmsConnection.getConnection();
-			String sql = "update Orders set orderStatur = ? where  tableId =? and  MenuItem = ?;";
+			String sql = "update Orders set orderStatur = ? where  tableId =?;";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(3, menuItem);
 			preparedStatement.setString(2, tableId);
-			preparedStatement.setString(1, newOrderStatus);
+			switch(newOrderStatus) {
+			case "READY":
+				newOrderStatus = OrderStatus.DELIVERED.toString();
+				preparedStatement.setString(1, newOrderStatus);
+				break;
+			case "DELIVERED":
+				newOrderStatus = OrderStatus.PAID.toString();
+				preparedStatement.setString(1, newOrderStatus);
+				break;
+			}
 			int i = preparedStatement.executeUpdate();
 			if (i > 0) {
 				System.out.println("Record updated sucessfully");
@@ -57,18 +76,19 @@ public class CreateOrderController {
 			}
 		}
 
-		public static void deleteRecord(String restaurantName, String menuName, String string, String menuItemName, String string2)
+		public static void deleteRecord(String restaurantName)
 				throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 			DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/"+restaurantName, "root", "Leonora.MM21");
 			Connection connection = dbmsConnection.getConnection();
-			String sql = "delete from "+menuName+" where id = ?;";
+			String sql = "select * from Orders where orderStatur = ?;";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, string);
-			int i = preparedStatement.executeUpdate();
-			if (i > 0) {
-				System.out.println("Record Deleted Successfully");
-			} else {
-				System.out.println("No Such Record in the Database");
+			preparedStatement.setString(1, "PAID");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				String sql1 = "delete from Orders where orderStatur = ?;";
+				PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
+				preparedStatement1.setString(1, "PAID");
+				preparedStatement1.executeUpdate();
 			}
 		}
 

@@ -1,5 +1,7 @@
 package org.makerminds.internship.java.restaurantpoin.login.model;
 
+import org.makerminds.internship.java.restaurantpoin.enums.UserRole;
+
 /**
  * @author Leonora Latifaj
  *

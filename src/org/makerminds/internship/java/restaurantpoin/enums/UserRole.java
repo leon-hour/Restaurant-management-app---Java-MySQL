@@ -1,4 +1,4 @@
-package org.makerminds.internship.java.restaurantpoin.login.model;
+package org.makerminds.internship.java.restaurantpoin.enums;
 
 /**
  * @author Leonora Latifaj

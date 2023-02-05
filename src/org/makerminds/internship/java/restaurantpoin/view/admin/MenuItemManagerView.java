@@ -10,9 +10,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +28,9 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.MenuItemManagerController;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.MenuDataProvider;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.MenuItemDataProvider;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
-import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.MenuDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.MenuItemDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.RestaurantDataProvider;
 
 /**
  * @author Leonora Latifaj

@@ -16,10 +16,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import org.makerminds.internship.java.restaurantpoin.dataProvider.UserDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.UserDataProvider;
+import org.makerminds.internship.java.restaurantpoin.enums.UserRole;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoin.login.model.User;
-import org.makerminds.internship.java.restaurantpoin.login.model.UserRole;
 import org.makerminds.internship.java.restaurantpoin.view.NavigationBar;
 import org.makerminds.internship.java.restaurantpoin.view.NavigationBarCook;
 import org.makerminds.internship.java.restaurantpoin.view.NavigationBarWaiter;

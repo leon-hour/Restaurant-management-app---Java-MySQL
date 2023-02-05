@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.RestaurantManagerController;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.RestaurantDataProvider;
 
 /**
  * @author Leonora Latifaj

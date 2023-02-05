@@ -18,6 +18,10 @@ import javax.swing.border.TitledBorder;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
+/**
+ * @author Leonora Latifaj
+ *
+ */
 public class TableReservationView {
 		
 

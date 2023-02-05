@@ -29,7 +29,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.TableManagerController;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.RestaurantDataProvider;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
 /**

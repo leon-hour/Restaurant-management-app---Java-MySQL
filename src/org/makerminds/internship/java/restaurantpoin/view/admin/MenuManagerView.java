@@ -22,8 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.MenuManagerController;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.MenuDataProvider;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.MenuDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.RestaurantDataProvider;
 
 /**
  * @author Leonora Latifaj

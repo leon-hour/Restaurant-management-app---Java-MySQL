@@ -5,22 +5,21 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
-import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.waiter.TableDataProvider;
 import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
-import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
+/**
+ * @author Leonora Latifaj
+ *
+ */
 public class Table {
 
 	static JPanel containerPanel = new JPanel();
@@ -39,7 +38,7 @@ public class Table {
 
 		String[] header = { "Table ID" };
 
-		JTable table = new JTable(getRecord(0, "Orderd"), header);
+		JTable table = new JTable(TableDataProvider.getRecord(0), header);
 		table.setFont(GENERAL_LABEL_FONT);
 		table.setRowHeight(25);
 		table.setBounds(20, 30, 500, 300);
@@ -55,7 +54,7 @@ public class Table {
 			public void mouseClicked(MouseEvent e) {
 				containerPanel.removeAll();
 				try {
-					containerPanel = CreateOrder.createMenuItemManagerContainerPanel(
+					containerPanel = CreateOrder.createOrderItemManagerContainerPanel(
 							table.getValueAt(table.getSelectedRow(), 0).toString());
 				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 						| FileNotFoundException | SQLException e1) {
@@ -68,31 +67,5 @@ public class Table {
 		containerPanel.add(scrollPane);
 		containerPanel.setBounds(20, 20, 720, 400);
 		return containerPanel;
-	}
-
-	public static String[][] getRecord(int i, String status) throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, SQLException, FileNotFoundException {
-		DBMSConnection dbmsConnection = new DBMSConnection(
-				"jdbc:mysql://localhost:3306/" + LoginController.getInstance().getLoggedInUser().getRestaurant(),
-				"root", "Leonora.MM21");
-		Connection connection = dbmsConnection.getConnection();
-		String sql = "select * from TABLE1";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		ResultSet resultSet = preparedStatement.executeQuery();
-		int j = 0;
-		while (resultSet.next()) {
-			j++;
-			System.out.println(j);
-		}
-		String sql1 = "select * from TABLE1";
-		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
-		ResultSet resultSet1 = preparedStatement1.executeQuery();
-		String[][] tableData = new String[j][1];
-		while (resultSet1.next()) {
-			tableData[i][0] = resultSet1.getString(1);
-			i++;
-		}
-		// dbmsConnection.closeConnection(connection, preparedStatement);
-		return tableData;
 	}
 }

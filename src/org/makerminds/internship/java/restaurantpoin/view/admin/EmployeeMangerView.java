@@ -19,8 +19,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import org.makerminds.internship.java.restaurantpoin.controller.admin.EmployeeManagerController;
-import org.makerminds.internship.java.restaurantpoin.dataProvider.RestaurantDataProvider;
-import org.makerminds.internship.java.restaurantpoin.login.model.UserRole;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.RestaurantDataProvider;
+import org.makerminds.internship.java.restaurantpoin.enums.UserRole;
 
 /**
  * @author Leonora Latifaj

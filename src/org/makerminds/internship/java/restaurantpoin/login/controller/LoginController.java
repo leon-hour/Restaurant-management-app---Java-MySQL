@@ -1,7 +1,7 @@
 package org.makerminds.internship.java.restaurantpoin.login.controller;
 
 
-import org.makerminds.internship.java.restaurantpoin.dataProvider.UserDataProvider;
+import org.makerminds.internship.java.restaurantpoin.dataProvider.admin.UserDataProvider;
 import org.makerminds.internship.java.restaurantpoin.login.model.User;
 
 /**

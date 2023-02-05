@@ -17,8 +17,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 
-import org.makerminds.internship.java.restaurantpoin.controller.admin.CreateOrderController;
+import org.makerminds.internship.java.restaurantpoin.controller.waiter.CreateOrderController;
+import org.makerminds.internship.java.restaurantpoin.enums.OrderStatus;
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
+import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
 public class TabelOrderView {
@@ -27,6 +29,7 @@ public class TabelOrderView {
 
 	static JPanel containerPanel = new JPanel();
 	private static final Font GENERAL_LABEL_FONT = new Font("Arial", Font.BOLD, 15);
+	static JTable table;
 //	private final static Color PANEL_BACKGROUND_COLOR = Color.decode("#4285F4");
 //	private final static Border blackline = BorderFactory.createLineBorder(Color.black);
 	static JPanel createContainerPanel(String restaurantDataBaseName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, FileNotFoundException, SQLException {
@@ -37,7 +40,7 @@ public class TabelOrderView {
 
 	String[] header = { "Table ID", "MenuItem","Quantity","Statusi"};
 
-	JTable table = new JTable(getRecord(0,"Orderd" ), header);
+	table = new JTable(getRecord(0,OrderStatus.QUEUE.toString(),OrderStatus.IN_PROGRESS.toString() ), header);
 	table.setFont(GENERAL_LABEL_FONT);
 	table.setRowHeight(25);
 	table.setBounds(20, 30, 500, 300);
@@ -60,7 +63,16 @@ public class TabelOrderView {
 					CreateOrderController.updateRecord(LoginController.getInstance().getLoggedInUser().getRestaurant(),
 							table.getValueAt(table.getSelectedRow(), 0).toString(),
 							table.getValueAt(table.getSelectedRow(), 1).toString(),
-							"Ready");
+							table.getValueAt(table.getSelectedRow(), 3).toString());
+					containerPanel.removeAll();
+					try {
+						containerPanel = TabelOrderView.createBasePanel(restaurant);
+					} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+							| FileNotFoundException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					LoginApp.changePanels(containerPanel);
 				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
 						| SQLException e1) {
 					// TODO Auto-generated catch block
@@ -75,7 +87,7 @@ public class TabelOrderView {
 	containerPanel.add(doneButton);
 	return containerPanel;
 }
-	public static String[][] getRecord(int i, String status) throws InstantiationException,
+	public static String[][] getRecord(int i, String status, String status1) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException, FileNotFoundException {
 		DBMSConnection dbmsConnection = new DBMSConnection("jdbc:mysql://localhost:3306/" +
 			LoginController.getInstance().getLoggedInUser().getRestaurant(), "root", "Leonora.MM21");
@@ -89,6 +101,14 @@ public class TabelOrderView {
 			j++;
 			System.out.println(j);
 		}
+		sql = "select * from orders where orderStatur=?";
+		preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, status1);
+		resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			j++;
+			System.out.println(j);
+		}
 		String sql1 = "select * from orders where orderStatur=?";
 		PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
 		preparedStatement1.setString(1, status);
@@ -96,6 +116,17 @@ public class TabelOrderView {
 		String[][] tableData = new String[j][4];
 		while (resultSet1.next()) {
 
+			tableData[i][0] = resultSet1.getString(1);
+			tableData[i][1] = resultSet1.getString(2);
+			tableData[i][2] = resultSet1.getString(4);
+			tableData[i][3] = resultSet1.getString(5);
+			i++;
+		}
+		sql1 = "select * from orders where orderStatur=?";
+		preparedStatement1 = connection.prepareStatement(sql1);
+		preparedStatement1.setString(1, status1);
+		resultSet1 = preparedStatement1.executeQuery();
+		while (resultSet1.next()) {
 			tableData[i][0] = resultSet1.getString(1);
 			tableData[i][1] = resultSet1.getString(2);
 			tableData[i][2] = resultSet1.getString(4);

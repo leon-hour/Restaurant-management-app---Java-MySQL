@@ -1,4 +1,4 @@
-package org.makerminds.internship.java.restaurantpoin.dataProvider;
+package org.makerminds.internship.java.restaurantpoin.dataProvider.admin;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.makerminds.internship.java.restaurantpoin.enums.UserRole;
 import org.makerminds.internship.java.restaurantpoin.login.model.User;
-import org.makerminds.internship.java.restaurantpoin.login.model.UserRole;
 import org.makerminds.internship.java.restaurantpoint.database.DBMSConnection;
 
 /**

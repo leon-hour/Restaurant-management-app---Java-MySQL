@@ -1,4 +1,4 @@
-package org.makerminds.internship.java.restaurantpoin.dataProvider;
+package org.makerminds.internship.java.restaurantpoin.dataProvider.admin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

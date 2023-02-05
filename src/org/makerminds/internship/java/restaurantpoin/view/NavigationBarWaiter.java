@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,8 +16,6 @@ import javax.swing.border.Border;
 
 import org.makerminds.internship.java.restaurantpoin.login.controller.LoginController;
 import org.makerminds.internship.java.restaurantpoin.login.view.LoginApp;
-import org.makerminds.internship.java.restaurantpoin.view.waiter.CreateOrder;
-import org.makerminds.internship.java.restaurantpoin.view.waiter.PrintInvoiceView;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.ShowOrders;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.Table;
 import org.makerminds.internship.java.restaurantpoin.view.waiter.TableReservationView;
@@ -141,14 +138,14 @@ public class NavigationBarWaiter {
 							break;
 						case 4:
 							containerPanel.removeAll();
-							try {
-								containerPanel = PrintInvoiceView.createBasePanel(
-										LoginController.getInstance().getLoggedInUser().getRestaurant());
-							} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
-									| FileNotFoundException | SQLException e1) {
+							//try {
+								//containerPanel = PrintInvoiceView.createBasePanel(
+									//	LoginController.getInstance().getLoggedInUser().getRestaurant());
+							//} catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+									//| FileNotFoundException | SQLException e1) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+							//	e1.printStackTrace();
+							//}
 							LoginApp.changePanels(containerPanel);
 							break;
 						case 5:

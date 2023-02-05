@@ -1,4 +1,4 @@
-package org.makerminds.internship.java.restaurantpoin.dataProvider;
+package org.makerminds.internship.java.restaurantpoin.dataProvider.admin;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -38,7 +38,7 @@ while (resultSet.next()) {
 	tableData[i][2] = resultSet.getString(3);
 	i++;
 }
-dbmsConnection.closeConnection(connection, preparedStatement);
+//dbmsConnection.closeConnection(connection, preparedStatement);
 return tableData;
 }
 	
